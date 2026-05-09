@@ -7,10 +7,11 @@ pipeline {
     }
 
     stages {
-
         stage('Checkout') {
             steps {
-                git 'https://github.com/Likhitha-HM/Maven.git'
+                git branch: 'main', 
+                    url: 'https://github.com/Likhitha-HM/lab6.git',
+                    credentialsId: 'github-token'
             }
         }
 
@@ -31,5 +32,10 @@ pipeline {
                 sh 'mvn package'
             }
         }
-    }
-}
+
+        stage('Run Application') {
+            steps {
+                sh 'mvn exec:java -Dexec.mainClass="com.example.app.App"'
+            }
+        }
+    } // End of Stages
